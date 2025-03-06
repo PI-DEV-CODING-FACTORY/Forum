@@ -19,7 +19,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("UPDATE Post p SET " +
             "p.title = :#{#p.title}, " +
             "p.content = :#{#p.content}, " +
-            "p.user.id = :#{#p.user_id}, " +
             "p.createdAt = :#{#p.createdAt} " +
             "WHERE p.id = :id")
     void updatePostById(@Param("p") Post p, @Param("id") int id);
@@ -35,6 +34,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT p FROM Post p where p.parent_post_id = :parent_id")
     List<Post> findCommentsByPostId(@Param("parent_id") int parent_id);
 
-    @Query("SELECT p FROM Post p where p.user.id = :userId")
+    @Query("SELECT p FROM Post p where p.user.id = :userId and p.type = 'question' ")
     List<Post> getPostsByUser_id(@Param("userId") int userId);
 }
