@@ -85,4 +85,16 @@ public class PostService implements IPost {
         return fileName.toString();
     }
 
+    @Override
+    public void reportPost(int postId) {
+        Post post = postRepository.findById(postId).get();
+        post.setReportCount(post.getReportCount() + 1);
+        
+        if (post.getReportCount() >= 5) {
+            postRepository.deleteById(postId);
+        } else {
+            postRepository.save(post);
+        }
+    }
+
 }

@@ -47,4 +47,7 @@ public class Post {
     String tags;
     @Column
     String image;
+    
+    @Column
+    int reportCount;
 }

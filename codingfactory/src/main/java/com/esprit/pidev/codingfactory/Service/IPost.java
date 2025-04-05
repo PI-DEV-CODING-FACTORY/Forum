@@ -25,4 +25,6 @@ public interface IPost {
     List<Post> getPostsByUser_id(int userId);
 
     public String saveImage(MultipartFile file) throws IOException;
+
+    void reportPost(int postId);
 }

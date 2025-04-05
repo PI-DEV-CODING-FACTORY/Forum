@@ -74,4 +74,9 @@ public class PostController {
     public List<Post> getPostsByUser_id(@PathVariable("userId") int userId) {
         return postService.getPostsByUser_id(userId);
     }
+    
+    @PostMapping("/report/{postId}")
+    public void reportPost(@PathVariable("postId") int postId) {
+        postService.reportPost(postId);
+    }
 }
