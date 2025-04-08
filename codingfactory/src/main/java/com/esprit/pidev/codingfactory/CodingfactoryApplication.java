@@ -14,7 +14,7 @@ import org.springframework.web.filter.CorsFilter;
 
 public class CodingfactoryApplication {
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) {
 		SpringApplication.run(CodingfactoryApplication.class, args);
 	}
 
@@ -33,8 +33,9 @@ public class CodingfactoryApplication {
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
-	 @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 }
