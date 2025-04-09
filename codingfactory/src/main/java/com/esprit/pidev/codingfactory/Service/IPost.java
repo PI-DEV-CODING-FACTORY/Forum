@@ -27,4 +27,6 @@ public interface IPost {
     public String saveImage(MultipartFile file) throws IOException;
 
     void reportPost(int postId);
+
+    void markAsBestAnswer(int postId, int commentId);
 }

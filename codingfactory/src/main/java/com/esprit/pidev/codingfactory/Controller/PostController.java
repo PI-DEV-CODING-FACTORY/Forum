@@ -79,4 +79,9 @@ public class PostController {
     public void reportPost(@PathVariable("postId") int postId) {
         postService.reportPost(postId);
     }
+    
+    @PostMapping("/best-answer/{postId}/{commentId}")
+    public void markAsBestAnswer(@PathVariable("postId") int postId, @PathVariable("commentId") int commentId) {
+        postService.markAsBestAnswer(postId, commentId);
+    }
 }

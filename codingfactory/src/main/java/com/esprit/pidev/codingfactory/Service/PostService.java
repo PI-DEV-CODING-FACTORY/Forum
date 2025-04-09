@@ -97,4 +97,11 @@ public class PostService implements IPost {
         }
     }
 
+    @Override
+    public void markAsBestAnswer(int postId, int commentId) {
+        Post post = postRepository.findById(postId).get();
+        post.setBestAnswerId(commentId);
+        postRepository.save(post);
+    }
+
 }

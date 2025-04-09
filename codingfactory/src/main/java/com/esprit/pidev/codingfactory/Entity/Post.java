@@ -56,6 +56,8 @@ public class Post {
 
     @Column
     int reportCount;
+    @Column
+    Integer bestAnswerId;
     @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Notification> notifications;
