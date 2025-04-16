@@ -55,7 +55,7 @@ public class Post {
     String image;
 
     @Column
-    int reportCount;
+    Integer reportCount;
     @Column
     Integer bestAnswerId;
     @JsonIgnore
