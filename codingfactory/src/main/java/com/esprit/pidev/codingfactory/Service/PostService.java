@@ -56,7 +56,10 @@ public class PostService implements IPost {
     public List<String> findDistinctTechnologies() {
         return postRepository.findDistinctTechnologies();
     }
-
+    @Override
+    public List<String> findTechnologies() {
+        return postRepository.findTechnologies();
+    }
     @Override
     public List<Post> findCommentsByPostId(int id) {
         return postRepository.findCommentsByPostId(id);

@@ -31,7 +31,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("SELECT DISTINCT p.tags FROM Post p WHERE p.tags IS NOT NULL AND p.tags <> '' AND p.type = 'question'")
     List<String> findDistinctTechnologies();
-
+    @Query("SELECT  p.tags FROM Post p WHERE p.tags IS NOT NULL AND p.tags <> '' AND p.type = 'question'")
+    List<String> findTechnologies();
     @Query("SELECT p FROM Post p where p.parent_post_id = :parent_id")
     List<Post> findCommentsByPostId(@Param("parent_id") int parent_id);
 

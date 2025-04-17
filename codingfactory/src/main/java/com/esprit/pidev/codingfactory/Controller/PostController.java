@@ -39,7 +39,10 @@ public class PostController {
     public List<String> findDistinctTechnologies() {
         return postService.findDistinctTechnologies();
     }
-
+    @GetMapping("/find/count/technology")
+    public List<String> findTechnologies() {
+        return postService.findTechnologies();
+    }
     @GetMapping("/find/comment/{id}")
     public List<Post> findCommentsByPostId(@PathVariable("id") int id) {
         return postService.findCommentsByPostId(id);

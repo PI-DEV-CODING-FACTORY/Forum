@@ -21,6 +21,7 @@ public interface IPost {
     public void deletePost(int id);
 
     List<String> findDistinctTechnologies();
+    public List<String> findTechnologies();
 
     List<Post> findCommentsByPostId(int id);
 
