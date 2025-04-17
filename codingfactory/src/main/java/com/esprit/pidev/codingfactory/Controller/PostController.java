@@ -74,14 +74,40 @@ public class PostController {
     public List<Post> getPostsByUser_id(@PathVariable("userId") int userId) {
         return postService.getPostsByUser_id(userId);
     }
-    
+
     @PostMapping("/report/{postId}")
     public void reportPost(@PathVariable("postId") int postId) {
         postService.reportPost(postId);
     }
-    
+
     @PostMapping("/best-answer/{postId}/{commentId}")
     public void markAsBestAnswer(@PathVariable("postId") int postId, @PathVariable("commentId") int commentId) {
         postService.markAsBestAnswer(postId, commentId);
     }
+
+    @GetMapping("/stats/total-posts")
+    public Long getTotalPosts() {
+        return postService.countTotalPosts();
+    }
+
+    @GetMapping("/stats/total-comments")
+    public Long getTotalComments() {
+        return postService.countTotalComments();
+    }
+
+    @GetMapping("/stats/total-best-answers")
+    public Long getTotalBestAnswers() {
+        return postService.countTotalBestAnswers();
+    }
+
+    @GetMapping("/stats/top-best-answerers")
+    public List<Object[]> getTopBestAnswerers() {
+        return postService.getTopBestAnswerers();
+    }
+
+    @GetMapping("/stats/top-contributors")
+    public List<Object[]> getTopContributors() {
+        return postService.getTopContributors();
+    }
+
 }

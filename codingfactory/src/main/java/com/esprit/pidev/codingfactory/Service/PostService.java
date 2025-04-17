@@ -89,7 +89,7 @@ public class PostService implements IPost {
     public void reportPost(int postId) {
         Post post = postRepository.findById(postId).get();
         post.setReportCount(post.getReportCount() + 1);
-        
+
         if (post.getReportCount() >= 5) {
             postRepository.deleteById(postId);
         } else {
@@ -102,6 +102,31 @@ public class PostService implements IPost {
         Post post = postRepository.findById(postId).get();
         post.setBestAnswerId(commentId);
         postRepository.save(post);
+    }
+
+    @Override
+    public Long countTotalPosts() {
+        return postRepository.countTotalPosts();
+    }
+
+    @Override
+    public Long countTotalComments() {
+        return postRepository.countTotalComments();
+    }
+
+    @Override
+    public Long countTotalBestAnswers() {
+        return postRepository.countTotalBestAnswers();
+    }
+
+    @Override
+    public List<Object[]> getTopBestAnswerers() {
+        return postRepository.findTopBestAnswerers();
+    }
+
+    @Override
+    public List<Object[]> getTopContributors() {
+        return postRepository.findTopUsers();
     }
 
 }

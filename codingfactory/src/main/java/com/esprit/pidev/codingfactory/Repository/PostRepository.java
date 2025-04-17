@@ -37,4 +37,30 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("SELECT p FROM Post p where p.user.id = :userId and p.type = 'question' ")
     List<Post> getPostsByUser_id(@Param("userId") int userId);
+
+    @Query("SELECT COUNT(p) FROM Post p WHERE p.type = 'question'")
+    Long countTotalPosts();
+
+    @Query("SELECT COUNT(p) FROM Post p WHERE p.type = 'response'")
+    Long countTotalComments();
+
+    @Query("SELECT COUNT(p) FROM Post p WHERE p.bestAnswerId IS NOT NULL")
+    Long countTotalBestAnswers();
+
+    @Query("""
+                SELECT
+                    p.user,
+                    SUM(CASE WHEN p.type = 'question' THEN 1 ELSE 0 END) as questionCount,
+                    SUM(CASE WHEN p.type = 'response' THEN 1 ELSE 0 END) as answerCount,
+                    COUNT(bp) as bestAnswerCount
+                FROM Post p
+                LEFT JOIN Post bp ON bp.bestAnswerId = p.id
+                GROUP BY p.user
+                ORDER BY bestAnswerCount DESC
+            """)
+    List<Object[]> findTopUsers();
+
+    @Query("SELECT p.user.id, COUNT(p2.bestAnswerId) as bestAnswerCount FROM Post p LEFT JOIN Post p2 ON p2.bestAnswerId = p.id GROUP BY p.user.id ORDER BY bestAnswerCount DESC")
+    List<Object[]> findTopBestAnswerers();
+
 }

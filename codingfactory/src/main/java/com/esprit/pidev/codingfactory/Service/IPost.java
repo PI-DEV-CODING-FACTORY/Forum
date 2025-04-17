@@ -9,7 +9,9 @@ import com.esprit.pidev.codingfactory.Entity.Post;
 
 public interface IPost {
     public List<Post> findAllPosts(int user_id);
+
     public List<Post> findAllPosts();
+
     public Post findPostById(int id);
 
     public void addPost(Post post);
@@ -29,4 +31,15 @@ public interface IPost {
     void reportPost(int postId);
 
     void markAsBestAnswer(int postId, int commentId);
+
+    Long countTotalPosts();
+
+    Long countTotalComments();
+
+    Long countTotalBestAnswers();
+    public List<Object[]> getTopContributors();
+   
+    List<Object[]> getTopBestAnswerers();
+
+
 }
