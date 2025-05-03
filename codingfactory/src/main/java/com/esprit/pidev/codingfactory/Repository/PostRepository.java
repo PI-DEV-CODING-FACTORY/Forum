@@ -23,8 +23,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "WHERE p.id = :id")
     void updatePostById(@Param("p") Post p, @Param("id") int id);
 
-    @Query("SELECT p FROM Post p WHERE p.type = 'question' AND (:user_id IS NULL OR p.user.id != :user_id)")
-    List<Post> findAllPosts(@Param("user_id") int user_id);
+    @Query("SELECT p FROM Post p WHERE p.type = 'question' AND (:user_id IS NULL OR p.user_id != :user_id)")
+    List<Post> findAllPosts(@Param("user_id") String user_id);
 
     @Query("SELECT p FROM Post p WHERE p.type = 'question'")
     List<Post> findAllPosts();
@@ -36,8 +36,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT p FROM Post p where p.parent_post_id = :parent_id")
     List<Post> findCommentsByPostId(@Param("parent_id") int parent_id);
 
-    @Query("SELECT p FROM Post p where p.user.id = :userId and p.type = 'question' ")
-    List<Post> getPostsByUser_id(@Param("userId") int userId);
+    @Query("SELECT p FROM Post p where p.user_id = :userId and p.type = 'question' ")
+    List<Post> getPostsByUser_id(@Param("userId") String userId);
 
     @Query("SELECT COUNT(p) FROM Post p WHERE p.type = 'question'")
     Long countTotalPosts();
@@ -50,18 +50,18 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("""
                 SELECT
-                    p.user,
+                    p.user_id,
                     SUM(CASE WHEN p.type = 'question' THEN 1 ELSE 0 END) as questionCount,
                     SUM(CASE WHEN p.type = 'response' THEN 1 ELSE 0 END) as answerCount,
                     COUNT(bp) as bestAnswerCount
                 FROM Post p
                 LEFT JOIN Post bp ON bp.bestAnswerId = p.id
-                GROUP BY p.user
+                GROUP BY p.user_id
                 ORDER BY bestAnswerCount DESC
             """)
     List<Object[]> findTopUsers();
 
-    @Query("SELECT p.user.id, COUNT(p2.bestAnswerId) as bestAnswerCount FROM Post p LEFT JOIN Post p2 ON p2.bestAnswerId = p.id GROUP BY p.user.id ORDER BY bestAnswerCount DESC")
+    @Query("SELECT p.user_id, COUNT(p2.bestAnswerId) as bestAnswerCount FROM Post p LEFT JOIN Post p2 ON p2.bestAnswerId = p.id GROUP BY p.user_id ORDER BY bestAnswerCount DESC")
     List<Object[]> findTopBestAnswerers();
 
 }

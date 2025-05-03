@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.esprit.pidev.codingfactory.Entity.Notification;
 import com.esprit.pidev.codingfactory.Entity.Post;
-import com.esprit.pidev.codingfactory.Entity.User;
-import com.esprit.pidev.codingfactory.Service.AuthService;
+// import com.esprit.pidev.codingfactory.Entity.User;
+// import com.esprit.pidev.codingfactory.Service.AuthService;
 import com.esprit.pidev.codingfactory.Service.NotificationService;
 import com.esprit.pidev.codingfactory.model.CommentNotificationRequest;
 
@@ -20,18 +20,18 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/notification")
 public class NotificationController {
     private final NotificationService notificationService;
-    private final AuthService authService;
+    // private final AuthService authService;
 
     @GetMapping("/user/{userId}")
-    public List<Notification> getUserNotifications(@PathVariable("userId") int userId) {
-        User user = authService.getUserById(userId);
-        return notificationService.getUserNotifications(user);
+    public List<Notification> getUserNotifications(@PathVariable("userId") String userId) {
+        // User user = authService.getUserById(userId);
+        return notificationService.getUserNotifications(userId);
     }
 
     @GetMapping("/user/unread/{userId}")
-    public List<Notification> getUnreadNotifications(@PathVariable("userId") int userId) {
-        User user = authService.getUserById(userId);
-        return notificationService.getUnreadNotifications(user);
+    public List<Notification> getUnreadNotifications(@PathVariable("userId") String userId) {
+        // User user = authService.getUserById(userId);
+        return notificationService.getUnreadNotifications(userId);
     }
 
     @PutMapping("/mark-read/{notificationId}")
@@ -40,10 +40,10 @@ public class NotificationController {
     }
 
     @PutMapping("/mark-all-read/{userId}")
-    public ResponseEntity<String> markAllAsRead(@PathVariable("userId") int userId) {
+    public ResponseEntity<String> markAllAsRead(@PathVariable("userId") String userId) {
         try {
-            User user = authService.getUserById(userId);
-            notificationService.markAllAsRead(user);
+            // User user = authService.getUserById(userId);
+            notificationService.markAllAsRead(userId);
             return ResponseEntity.ok("All notifications marked as read");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -54,11 +54,11 @@ public class NotificationController {
     @PostMapping("/mention")
     public ResponseEntity<String> createMentionNotification(@RequestBody CommentNotificationRequest request) {
         try {
-            User user = request.getUser();
+            String userId = request.getUser_id();
             Post post = request.getPost();
-            System.out.println("User: " + user);
+            System.out.println("User: " + userId);
             System.out.println("Post: " + post);
-            notificationService.createMentionNotification(user, post, request.getCommenterName());
+            notificationService.createMentionNotification(userId, post, request.getCommenterName());
             return ResponseEntity.ok("Notification created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -78,9 +78,10 @@ public class NotificationController {
     @PostMapping("/comment")
     public ResponseEntity<String> createCommentNotification(@RequestBody CommentNotificationRequest request) {
         try {
-            User user = request.getUser();
+            // User user = request.getUser();
+            String userId = request.getUser_id();
             Post post = request.getPost();
-            notificationService.createCommentNotification(user, post, request.getCommenterName());
+            notificationService.createCommentNotification(userId, post, request.getCommenterName());
             return ResponseEntity.ok("Notification created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -26,7 +26,7 @@ public class PostController {
     private IPost postService;
 
     @GetMapping("/all/{userId}")
-    public List<Post> findAllPosts(@PathVariable("userId") int userId) {
+    public List<Post> findAllPosts(@PathVariable("userId") String userId) {
         return postService.findAllPosts(userId);
     }
 
@@ -74,7 +74,7 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Post> getPostsByUser_id(@PathVariable("userId") int userId) {
+    public List<Post> getPostsByUser_id(@PathVariable("userId") String userId) {
         return postService.getPostsByUser_id(userId);
     }
 

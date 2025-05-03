@@ -23,7 +23,7 @@ public class PostService implements IPost {
     final String uploadPath = "D:/images/";
 
     @Override
-    public List<Post> findAllPosts(int user_id) {
+    public List<Post> findAllPosts(String user_id) {
         return postRepository.findAllPosts(user_id);
     }
 
@@ -66,7 +66,7 @@ public class PostService implements IPost {
     }
 
     @Override
-    public List<Post> getPostsByUser_id(int userId) {
+    public List<Post> getPostsByUser_id(String userId) {
         return postRepository.getPostsByUser_id(userId);
     }
 

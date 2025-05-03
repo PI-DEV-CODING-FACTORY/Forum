@@ -3,7 +3,7 @@ package com.esprit.pidev.codingfactory.Service;
 import com.esprit.pidev.codingfactory.Entity.Notification;
 import com.esprit.pidev.codingfactory.Entity.NotificationType;
 import com.esprit.pidev.codingfactory.Entity.Post;
-import com.esprit.pidev.codingfactory.Entity.User;
+
 
 import com.esprit.pidev.codingfactory.Repository.NotificationRepository;
 
@@ -19,9 +19,9 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
 
     @Transactional
-    public void createCommentNotification(User user, Post post, String commenterName) {
+    public void createCommentNotification(String user_id, Post post, String commenterName) {
         Notification notification = new Notification();
-        notification.setUser(user);
+        notification.setUser_id(user_id);
         notification.setPost(post);
         notification.setMessage(commenterName + " commented on your post");
         notification.setType(NotificationType.COMMENT);
@@ -31,9 +31,9 @@ public class NotificationService {
     }
 
     @Transactional
-    public void createMentionNotification(User user, Post post, String mentionedBy) {
+    public void createMentionNotification(String user_id, Post post, String mentionedBy) {
         Notification notification = new Notification();
-        notification.setUser(user);
+        notification.setUser_id(user_id);
         notification.setPost(post);
         notification.setMessage(mentionedBy + " mentioned you in a post");
         notification.setType(NotificationType.MENTION);
@@ -42,12 +42,12 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
-    public List<Notification> getUserNotifications(User user) {
-        return notificationRepository.findByUser(user);
+    public List<Notification> getUserNotifications(String user_id) {
+        return notificationRepository.findByUserId(user_id);
     }
 
-    public List<Notification> getUnreadNotifications(User user) {
-        return notificationRepository.findByUserAndIsReadFalse(user);
+    public List<Notification> getUnreadNotifications(String user_id) {
+        return notificationRepository.findUnreadByUserId(user_id);
     }
 
     public void markAsRead(Long notificationId) {
@@ -58,8 +58,8 @@ public class NotificationService {
     }
 
     @Transactional
-    public void markAllAsRead(User user) {
-        List<Notification> unreadNotifications = notificationRepository.findByUserAndIsReadFalse(user);
+    public void markAllAsRead(String user_id) {
+        List<Notification> unreadNotifications = notificationRepository.findUnreadByUserId(user_id);
         unreadNotifications.forEach(notification -> {
             notification.setRead(true);
             notificationRepository.save(notification);

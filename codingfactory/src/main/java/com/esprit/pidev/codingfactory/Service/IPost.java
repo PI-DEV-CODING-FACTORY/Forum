@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.esprit.pidev.codingfactory.Entity.Post;
 
 public interface IPost {
-    public List<Post> findAllPosts(int user_id);
+    public List<Post> findAllPosts(String user_id);
 
     public List<Post> findAllPosts();
 
@@ -25,7 +25,7 @@ public interface IPost {
 
     List<Post> findCommentsByPostId(int id);
 
-    List<Post> getPostsByUser_id(int userId);
+    List<Post> getPostsByUser_id(String userId);
 
     public String saveImage(MultipartFile file) throws IOException;
 
